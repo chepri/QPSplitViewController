@@ -10,7 +10,7 @@
 
 @interface QPSplitViewController : UIViewController
 
-- (instancetype)initWithLeftViewController:(UIViewController *)leftController rightViewController:(UIViewController *)rightController;
+- (void)setupWithLeftViewController:(UIViewController *)leftController rightViewController:(UIViewController *)rightController;
 
 @property (strong, nonatomic) UIViewController *leftController;
 

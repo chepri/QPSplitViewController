@@ -18,36 +18,25 @@
 
 @implementation QPSplitViewController
 
-- (instancetype)initWithLeftViewController:(UIViewController *)leftController rightViewController:(UIViewController *)rightController {
-    self = [super init];
-    if (self) {
-        CGRect frame = [[UIScreen mainScreen] bounds];
-        
-        // default left width = 260f
-        _leftSplitWidth = 260;
-        _rightSplitWidth = frame.size.width - _leftSplitWidth;
-        _splitView = [[QPSplitView alloc] initWithFrame:frame controller:self];
-        _splitView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self initLeftViewController:leftController];
-        [self initRightViewController:rightController];
+- (void)setupWithLeftViewController:(UIViewController *)leftController rightViewController:(UIViewController *)rightController {
+    CGRect frame = self.view.frame;
+    if (self.navigationBar) {
+        CGFloat newTop = self.navigationBar.frame.origin.y + self.navigationBar.frame.size.height;
+        frame.size.height -= newTop;
+        frame.origin.y = newTop;
     }
-    return self;
-}
-
-- (instancetype)init
-{
-    return [self initWithLeftViewController:nil rightViewController:nil];
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)loadView {
-    self.view = _splitView;
-    _splitView.backgroundColor = [UIColor whiteColor];
     
+    self.leftSplitWidth = 308;
+    self.rightSplitWidth = frame.size.width - self.leftSplitWidth;
+    
+    QPSplitView *splitView = [[QPSplitView alloc] initWithFrame:frame controller:self];
+    splitView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self performSelector:@selector(setSplitView:) withObject:splitView];
+    
+    [self performSelector:@selector(initLeftViewController:) withObject:leftController];
+    [self performSelector:@selector(initRightViewController:) withObject:rightController];
+    
+    [self.view addSubview:splitView];
 }
 
 #pragma mark -
