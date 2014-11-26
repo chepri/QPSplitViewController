@@ -21,12 +21,12 @@
 - (void)setupWithLeftViewController:(UIViewController *)leftController rightViewController:(UIViewController *)rightController {
     CGRect frame = self.view.frame;
     
-    self.leftSplitWidth = 308;
-    self.rightSplitWidth = frame.size.width - self.leftSplitWidth;
-    
     QPSplitView *splitView = [[QPSplitView alloc] initWithFrame:frame controller:self];
     splitView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.splitView = splitView;
+    
+    self.leftSplitWidth = 308;
+    self.rightSplitWidth = frame.size.width - self.leftSplitWidth;
     
     [self initLeftViewController:leftController];
     [self initRightViewController:rightController];
