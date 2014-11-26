@@ -20,21 +20,16 @@
 
 - (void)setupWithLeftViewController:(UIViewController *)leftController rightViewController:(UIViewController *)rightController {
     CGRect frame = self.view.frame;
-    if (self.navigationBar) {
-        CGFloat newTop = self.navigationBar.frame.origin.y + self.navigationBar.frame.size.height;
-        frame.size.height -= newTop;
-        frame.origin.y = newTop;
-    }
     
     self.leftSplitWidth = 308;
     self.rightSplitWidth = frame.size.width - self.leftSplitWidth;
     
     QPSplitView *splitView = [[QPSplitView alloc] initWithFrame:frame controller:self];
     splitView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self performSelector:@selector(setSplitView:) withObject:splitView];
+    self.splitView = splitView;
     
-    [self performSelector:@selector(initLeftViewController:) withObject:leftController];
-    [self performSelector:@selector(initRightViewController:) withObject:rightController];
+    [self initLeftViewController:leftController];
+    [self initRightViewController:rightController];
     
     [self.view addSubview:splitView];
 }
